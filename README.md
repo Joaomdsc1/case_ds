@@ -1,1 +1,1 @@
-# case_ds
+# case_data_scientist
