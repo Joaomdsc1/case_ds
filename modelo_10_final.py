@@ -151,3 +151,27 @@ if diff_train_val > 0.15:
     print("⚠️  ATENÇÃO: Overfitting ainda pode estar presente.")
 else:
     print("✅ Modelo parece bem generalizado.")
+
+# 13. Geração do CSV com os Resultados Finais
+print("\n" + "="*60)
+print("GERANDO ARQUIVO CSV COM OS RESULTADOS")
+print("="*60)
+
+# Criar um DataFrame com as features originais, a classe real e as predições
+resultados_df = X_test.copy()
+resultados_df['Classe_Real'] = y_test
+resultados_df['Classe_Predita'] = y_test_pred
+resultados_df['Probabilidade_Alto_Valor'] = y_test_proba
+
+# Reordenar as colunas para melhor visualização
+colunas_principais = ['Classe_Real', 'Classe_Predita', 'Probabilidade_Alto_Valor']
+outras_colunas = [col for col in X_test.columns]
+resultados_df = resultados_df[colunas_principais + outras_colunas]
+
+# Salvar o DataFrame em um arquivo CSV
+nome_arquivo_saida = 'resultados_classificacao.csv'
+try:
+    resultados_df.to_csv(nome_arquivo_saida, index=False, sep=';', decimal=',')
+    print(f"✅ Resultados da classificação salvos com sucesso no arquivo '{nome_arquivo_saida}'")
+except Exception as e:
+    print(f"❌ Ocorreu um erro ao salvar o arquivo CSV: {e}")
